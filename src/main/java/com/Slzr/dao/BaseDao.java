@@ -45,6 +45,41 @@ public class BaseDao {
         return conn;
 
     }
+    public static ResultSet excute(String sql, Object[] parmes, Connection c, PreparedStatement ps, ResultSet rs) throws SQLException {
+        ps = c.prepareStatement(sql);
+        for(int i = 0; i < parmes.length; ++i) {
+            ps.setObject(i + 1, parmes[i]);
+        }
+        rs = ps.executeQuery(sql);
+        return rs;
+    }
+    public static int excute(String sql, Object[] parmes, Connection c, PreparedStatement ps) throws SQLException {
+        ps = c.prepareStatement(sql);
+        int i;
+        for(i = 0; i < parmes.length; ++i) {
+            ps.setObject(i + 1, parmes[i]);
+        }
+        i = ps.executeUpdate();
+        return i;
+    }
+    public static boolean closeResource(Connection c, PreparedStatement ps, ResultSet rs) {
+        boolean flag = true;
+        try {
+            if (rs != null) {
+                rs.close(); rs = null;
+            } if (ps != null) {
+                ps.close(); ps = null;
+            }
+            if (c != null) {
+                c.close(); c = null;
+            }
+
+        } catch (SQLException var5) {
+            flag = false; throw new RuntimeException(var5);
+
+        }
+        return flag;
+    }
     @Test
     public void test() throws SQLException, IOException, ClassNotFoundException {
         DbPool db=DbPool.getDbPool();
