@@ -37,7 +37,7 @@ public class GetResultSetEntity {
                     if ("class java.lang.Integer".equals(type)) {
 
                         method = userclass.getMethod("set"+f.getName().substring(0, 1).toUpperCase()+ name.substring(1) , Integer.class);
-                        method.invoke(s, rs.getInt(i));//set首字母大写
+                        method.invoke(s, rs.getInt(name));//set首字母大写
                     }
 
                     if (type.equals("class java.lang.String")) {

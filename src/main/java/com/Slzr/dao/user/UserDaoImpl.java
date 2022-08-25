@@ -26,10 +26,12 @@ public class UserDaoImpl implements UserDao{
             rs = BaseDao.excute(sql, o, c, ps, rs);
             user = new User();
             GetResultSetEntity gsu=new GetResultSetEntity();
-           user= gsu.SetUser(user,rs);
+           user= gsu.SetUser(user,rs);//利用反射获取方法判断字段属性给user类赋值
             System.out.println(user.toString());
+
+
 //            if(rs.next()) {
-//                //user.setId( rs.getInt("id"));
+//                //user.setId( rs.getInt("id"));//传统方法获取
 //            }
 
 
