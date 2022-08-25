@@ -2,11 +2,11 @@ var path = $("#path").val();
 var imgYes = "<img width='15px' src='"+path+"/images/y.png' />";
 var imgNo = "<img width='15px' src='"+path+"/images/n.png' />";
 /**
- * æç¤ºä¿¡æ¯æ˜¾ç¤º
- * element:æ˜¾ç¤ºæç¤ºä¿¡æ¯çš„å…ƒç´ ï¼ˆfontï¼‰
- * cssï¼šæç¤ºæ ·å¼
- * tipString:æç¤ºä¿¡æ¯
- * statusï¼štrue/false --éªŒè¯æ˜¯å¦é€šè¿‡
+ * ÌáÊ¾ĞÅÏ¢ÏÔÊ¾
+ * element:ÏÔÊ¾ÌáÊ¾ĞÅÏ¢µÄÔªËØ£¨font£©
+ * css£ºÌáÊ¾ÑùÊ½
+ * tipString:ÌáÊ¾ĞÅÏ¢
+ * status£ºtrue/false --ÑéÖ¤ÊÇ·ñÍ¨¹ı
  */
 function validateTip(element,css,tipString,status){
 	element.css(css);

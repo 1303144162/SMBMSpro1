@@ -37,11 +37,16 @@ public class BaseDao {
 
 
     }
-    public static Connection getconnect() throws ClassNotFoundException, SQLException {
+    public static Connection getconnect()  {
         Connection conn=null;
-        Class.forName(drive);
-        conn = DriverManager.getConnection(url, dbuser, password);
+        try {
+            Class.forName(drive);
 
+        conn = DriverManager.getConnection(url, dbuser, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
         return conn;
 
     }

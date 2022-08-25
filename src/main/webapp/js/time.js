@@ -1,4 +1,4 @@
-//æ—¶é—´
+//Ê±¼ä
 function fn(){
     var time = new Date();
     var str= "";
@@ -12,22 +12,22 @@ function fn(){
     var s = time.getSeconds();
     var week = time.getDay();
     switch (week){
-        case 0:week="æ—¥";
+        case 0:week="ÈÕ";
             break;
-        case 1:week="ä¸€";
+        case 1:week="Ò»";
             break;
-        case 2:week="äºŒ";
+        case 2:week="¶þ";
             break;
-        case 3:week="ä¸‰";
+        case 3:week="Èý";
             break;
-        case 4:week="å››";
+        case 4:week="ËÄ";
             break;
-        case 5:week="äº”";
+        case 5:week="Îå";
             break;
-        case 6:week="å…­";
+        case 6:week="Áù";
             break;
     }
-    str = year +"å¹´"+totwo(mon)+"æœˆ"+totwo(day)+"æ—¥"+"&nbsp;"+totwo(h)+":"+totwo(m)+":"+totwo(s)+"&nbsp;"+"æ˜ŸæœŸ"+week;
+    str = year +"Äê"+totwo(mon)+"ÔÂ"+totwo(day)+"ÈÕ"+"&nbsp;"+totwo(h)+":"+totwo(m)+":"+totwo(s)+"&nbsp;"+"ÐÇÆÚ"+week;
     div.innerHTML = str;
 }
 fn();
