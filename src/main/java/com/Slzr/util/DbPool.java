@@ -14,23 +14,23 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class DbPool {
-//连接池
-    List<Connection> cs=new ArrayList<Connection>();
-     int size=5;
-    String drive=null;
-    String url=null;
-    String dbuser=null;
-    String password=null;
+    //连接池
+    private List<Connection> cs=new ArrayList<Connection>();
+    int size=5;
+    private   String drive=null;
+    private  String url=null;
+    private  String dbuser=null;
+    private  String password=null;
     private static volatile DbPool dbpool;
-   private  DbPool(){
+    private  DbPool(){}
 
-    }
-   public static DbPool getDbPool() throws SQLException, IOException, ClassNotFoundException {
-    if(dbpool==null){//单例模式只获取一个对象
-        dbpool=new DbPool();
-        dbpool.init();//初始化
-    }
-    return dbpool;
+    public static DbPool getDbPool() throws SQLException, IOException, ClassNotFoundException {
+        if(dbpool==null){//单例模式只能获取一个对象
+
+                    dbpool=new DbPool();
+            dbpool.init();//初始化
+        }
+        return dbpool;
     }
     private   void init() throws IOException, ClassNotFoundException, SQLException {
         //获取properties文件数据
@@ -42,9 +42,9 @@ public class DbPool {
         dbuser= properties.getProperty("dbuser");
         password=properties.getProperty("password");
 
-       String value=null;
-       value=(String) properties.get("size");//判断properties文件有没有设置连接数
-      if(value!=null) this.size=Integer.parseInt(value);
+        String value=null;
+        value=(String) properties.get("size");//判断properties文件有没有设置连接数
+        if(value!=null) this.size=Integer.parseInt(value);
 
         //加载sql驱动
         Class.forName(drive);
@@ -59,9 +59,9 @@ public class DbPool {
     //synchronized 线程安全性
     public synchronized Connection getConnect(){
         try {
-        while(cs.isEmpty()){//判断连接池是否为空如果为空则等待
+            while(cs.isEmpty()){//判断连接池是否为空如果为空则等待
                 this.wait();
-        }
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +70,7 @@ public class DbPool {
         return c;
     }
     public synchronized void returnConnect(Connection c){
-       // 使用完给回连接池中唤醒wait告诉它有新的连接池可用
+        // 使用完给回连接池中唤醒wait告诉它有新的连接池可用
         cs.add(c);
         this.notifyAll();
     }

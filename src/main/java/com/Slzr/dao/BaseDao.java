@@ -47,16 +47,16 @@ public class BaseDao {
     }
     public static ResultSet excute(String sql, Object[] parmes, Connection c, PreparedStatement ps, ResultSet rs) throws SQLException {
         ps = c.prepareStatement(sql);
-        for(int i = 0; i < parmes.length; ++i) {
+        for(int i = 0; i < parmes.length; i++) {
             ps.setObject(i + 1, parmes[i]);
         }
-        rs = ps.executeQuery(sql);
+        rs = ps.executeQuery();
         return rs;
     }
     public static int excute(String sql, Object[] parmes, Connection c, PreparedStatement ps) throws SQLException {
         ps = c.prepareStatement(sql);
         int i;
-        for(i = 0; i < parmes.length; ++i) {
+        for(i = 0; i < parmes.length; i++) {
             ps.setObject(i + 1, parmes[i]);
         }
         i = ps.executeUpdate();
