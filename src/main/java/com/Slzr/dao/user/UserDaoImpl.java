@@ -25,8 +25,6 @@ public class UserDaoImpl implements UserDao {
                 user = new User();
                 GetResultSetEntity gsu = new GetResultSetEntity();
                 user = gsu.SetUser(user, rs);//利用反射获取方法判断字段属性给user类赋值
-
-
 //            if(rs.next()) {
 //                //user.setId( rs.getInt("id"));//传统方法获取
 //            }
@@ -45,14 +43,14 @@ public class UserDaoImpl implements UserDao {
     public int updatePwd(Connection conn, int id, String pwd) throws SQLException {
 
         PreparedStatement ps = null;
-
+        int execute=0;
         if(conn!=null){
             String sql="update smbms_user set userPassword = ? where id = ?";
             Object  parms[]={pwd,id};//注意sql 顺序
-            return   BaseDao.excute(sql,parms,conn,ps);
+            execute=   BaseDao.excute(sql,parms,conn,ps);
         }
 
-        return 0;
+        return execute;
     }
 
 

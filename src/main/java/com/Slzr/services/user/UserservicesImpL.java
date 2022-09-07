@@ -7,6 +7,7 @@ import com.Slzr.entity.User;
 import org.junit.Test;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class UserservicesImpL implements Userservices{
     //引用Dao层
@@ -30,6 +31,23 @@ public class UserservicesImpL implements Userservices{
         return user;
 
     }
+
+    @Override
+    public boolean updatePwd(int id, String pwd) {
+        Connection conn=BaseDao.getconnect();
+        boolean flag=false;
+        try {
+            if(userdao.updatePwd(conn,id,pwd)>0){
+                flag=true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            BaseDao.closeResource(conn,null,null);
+        }
+        return flag;
+    }
+
     @Test
     public void test(){
         Userservices userlogin=new UserservicesImpL();
