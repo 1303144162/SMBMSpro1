@@ -12,23 +12,17 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class GetResultSetEntity {
-
-
     public User SetUser(User s,ResultSet rs) throws ClassNotFoundException, SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchFieldException {
 
         Class userclass=Class.forName("com.Slzr.entity.User");//使用反射获取class内容
         Field [] fields=userclass.getDeclaredFields();//获取class的字段属性
-
         ResultSetMetaData rsdata=rs.getMetaData();//获取resultset的列名称和类型信息
         int count=rsdata.getColumnCount();//获取resultset的列表列数
 
         if(rs.next()) {
         for (int i = 1; i <= count; i++) {
             String name = rsdata.getColumnName(i);//获取列名
-
             for (Field f : fields) {
-
-
                 if (name.equals(f.getName())) {//判断属性名称和数据库字段名称是否相同
                     Method method = null;//提取方法
                     String type=f.getGenericType().toString();//获取属性类型
@@ -53,9 +47,7 @@ public class GetResultSetEntity {
                 }
             }
         }
-
         }
         return s;
-
     }
 }
