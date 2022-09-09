@@ -10,5 +10,6 @@ public interface UserDao {
     public User getUserCodeEnt(Connection c, String Usercode);
     //修改密码
     public int updatePwd(Connection conn,int id,String pwd) throws SQLException;
-
+    //查询用户总数
+    public  int getUserCount(Connection conn,String username,int rolecode,int pageNo,int pageSize) throws SQLException, Exception;
 }

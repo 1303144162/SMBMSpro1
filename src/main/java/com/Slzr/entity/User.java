@@ -18,7 +18,16 @@ public class User {
     private Date modifyDate;
 
     private Integer age;
-    private String  userroleName;
+
+    public String getUserRoleName() {
+        return userRoleName;
+    }
+
+    public void setUserRoleName(String userRoleName) {
+        this.userRoleName = userRoleName;
+    }
+
+    private String  userRoleName;
 
     public Integer getId() {
         return id;
@@ -133,32 +142,7 @@ public class User {
 
 
 
-    public String getUserroleName() {
-        return userroleName;
-    }
 
-    public void setUserroleName(String userroleName) {
-        this.userroleName = userroleName;
-    }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userCode='" + userCode + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", gender=" + gender +
-                ", birthday=" + birthday +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", userRole=" + userRole +
-                ", createdBy=" + createdBy +
-                ", creationDate=" + creationDate +
-                ", modifyBy=" + modifyBy +
-                ", modifyDate=" + modifyDate +
-                ", age=" + age +
-                ", userroleName='" + userroleName + '\'' +
-                '}';
-    }
+
 }

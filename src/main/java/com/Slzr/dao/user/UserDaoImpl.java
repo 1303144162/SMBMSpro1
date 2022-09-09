@@ -4,12 +4,16 @@ import com.Slzr.dao.BaseDao;
 import com.Slzr.entity.User;
 import com.Slzr.util.DbPool;
 import com.Slzr.util.GetResultSetEntity;
+import com.mysql.cj.util.StringUtils;
 import org.junit.Test;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDaoImpl implements UserDao {
     public User getUserCodeEnt(Connection c, String Usercode) {
@@ -51,6 +55,37 @@ public class UserDaoImpl implements UserDao {
         }
 
         return execute;
+    }
+
+    @Override
+    public int getUserCount(Connection conn, String username, int rolecode,int pageNo,int pageSize) throws SQLException, Exception{
+        StringBuffer sql=null;//创建字符缓存 为拼接sql命令
+       PreparedStatement pstm= null;
+        ResultSet rs= null;
+        List<Object> list=new ArrayList<>();//创建列表添加参数为转换object[]
+        if(conn!=null){
+            sql=new StringBuffer();
+            sql.append("select smbms_user.*,smbms_role.roleName as userRoleName from smbms_user,smbms_role where smbms_user.userRole=smbms_role.id");
+            if(!StringUtils.isNullOrEmpty(username)) {
+            sql.append("and smbms_user.userName like ?");//查找用户名称
+            list.add("%"+username+"%");//%模糊查询
+            }
+            if(rolecode>0) {
+                sql.append("and smbms_user.userRole= ?");//查找权限
+                list.add(rolecode);
+            }
+            sql.append(" order by creationDate desc limit ?,?");//sql分页
+            pageNo=(pageNo-1)*pageSize;
+            list.add(pageNo );//起始第几个
+            list.add(pageSize);//往后查的个数
+        Object parms[]=list.toArray();
+       rs= BaseDao.excute(sql.toString(),parms,conn,pstm,rs);
+       GetResultSetEntity getusercount=new GetResultSetEntity();
+        User user=new User();
+       user= getusercount.SetUser(user,rs);
+
+        }
+        return 0;
     }
 
 
