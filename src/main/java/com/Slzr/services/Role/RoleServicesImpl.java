@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RoleServicesImpl implements RoleServices{
     private RoleDao roledao;
-    RoleServicesImpl(){
+   public RoleServicesImpl(){
         roledao=new RoleDaoImpl();
     }
     @Override

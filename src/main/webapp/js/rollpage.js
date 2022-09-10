@@ -5,15 +5,15 @@ function page_nav(frm,num){
 
 function jump_to(frm,num){
     //alert(num);
-	//éªŒè¯ç”¨æˆ·çš„è¾“å…¥
+	//ÑéÖ¤ÓÃ»§µÄÊäÈë
 	var regexp=/^[1-9]\d*$/;
 	var totalPageCount = document.getElementById("totalPageCount").value;
 	//alert(totalPageCount);
 	if(!regexp.test(num)){
-		alert("è¯·è¾“å…¥å¤§äº0çš„æ­£æ•´æ•°ï¼");
+		alert("ÇëÊäÈë´óÓÚ0µÄÕıÕûÊı£¡");
 		return false;
 	}else if((num-totalPageCount) > 0){
-		alert("è¯·è¾“å…¥å°äºæ€»é¡µæ•°çš„é¡µç ");
+		alert("ÇëÊäÈëĞ¡ÓÚ×ÜÒ³ÊıµÄÒ³Âë");
 		return false;
 	}else{
 		page_nav(frm,num);

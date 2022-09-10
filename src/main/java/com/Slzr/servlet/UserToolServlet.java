@@ -1,9 +1,14 @@
 package com.Slzr.servlet;
 
+import com.Slzr.dao.Role.RoleDao;
+import com.Slzr.entity.Role;
 import com.Slzr.entity.User;
+import com.Slzr.services.Role.RoleServices;
+import com.Slzr.services.Role.RoleServicesImpl;
 import com.Slzr.services.user.Userservices;
 import com.Slzr.services.user.UserservicesImpL;
 import com.Slzr.util.Constants;
+import com.Slzr.util.PageSupport;
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.cj.util.StringUtils;
 import com.mysql.cj.xdevapi.JsonArray;
@@ -17,6 +22,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(name="UserToolServlet",value = "/jsp/user.do")
@@ -29,6 +35,12 @@ public class UserToolServlet extends HttpServlet {
                 this.savepwd(req,resp);
             }else if(method.equals("pwdmodify") && method != null){//隐藏域判断
                 this.pwdmodify(req, resp);
+            }else if(method.equals("query") && method != null){
+                try {
+                    this.query(req,resp);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
     }
 
@@ -73,5 +85,52 @@ public class UserToolServlet extends HttpServlet {
             req.setAttribute("message","密码修改有问题");
         }
         req.getRequestDispatcher("pwdmodify.jsp").forward(req,resp);
+    }
+    public void query(HttpServletRequest req,HttpServletResponse resp) throws Exception {
+        //查询用户列表
+        //获取前端数据
+       String qname= req.getParameter("queryname");
+        String qrole= req.getParameter("queryUserRole");
+        String pageindex= req.getParameter("pageIndex");
+        int currqrole=0;
+
+        //获取用户列表
+        Userservices userservicesImpL = new UserservicesImpL();
+
+        int currentpageNo=1;
+
+        if(qname==null){
+            qname="";
+        }
+        if (qrole!=null&&!qrole.equals("")){
+            currqrole=Integer.parseInt(qrole);
+        }
+        if(pageindex!=null){
+            currentpageNo= Integer.parseInt(pageindex);
+        }
+        int usercount=userservicesImpL.getUserCount(qname,currqrole);
+        //分页工具包
+        PageSupport pageSupport=new PageSupport();
+        pageSupport.setPageSize(5);
+        pageSupport.setCurrentPageNo(currentpageNo);
+        pageSupport.setTotalCount(usercount);
+        int totalPageCount  =pageSupport.getTotalPageCount();
+        if(totalPageCount<1){
+            currentpageNo=1;
+        }else if(currentpageNo>totalPageCount){
+            currentpageNo=totalPageCount;
+        }
+        //赋值 关联jsp对应变量
+      List<User> userList= userservicesImpL.getListUser(qname,currqrole,currentpageNo,5);
+        req.setAttribute("userList",userList);
+        RoleServices roleServices=new RoleServicesImpl();
+        List<Role> roleList=roleServices.getRoleList();
+
+        req.setAttribute("roleList",roleList);
+        req.setAttribute("totalCount",usercount);
+        req.setAttribute("currentPageNo",currentpageNo);
+        req.setAttribute("totalPageCount",totalPageCount);
+        req.getRequestDispatcher("userlist.jsp").forward(req,resp);
+
     }
 }
