@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserservicesImpL implements Userservices{
     //引用Dao层
@@ -48,12 +50,42 @@ public class UserservicesImpL implements Userservices{
         return flag;
     }
 
+    @Override
+    public int getUserCount(String username, int userrole) {
+        Connection conn=null;
+        int count=0;
+
+        try {
+            conn=BaseDao.getconnect();
+         count= userdao.getUserCount(conn,username,userrole);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            BaseDao.closeResource(conn,null,null);
+        }
+
+        return count;
+    }
+
+    @Override
+    public List<User> getListUser(String username, int rolecode, int pageNo, int pageSize) throws SQLException, Exception {
+       Connection conn= BaseDao.getconnect();
+       List<User> userList=new ArrayList<User>();
+        if (conn!=null){
+            userList=userdao.getListUser(conn,username,rolecode,pageNo,pageSize);
+        }
+        BaseDao.closeResource(conn,null,null);
+        return userList;
+    }
+
     @Test
     public void test(){
-        Userservices userlogin=new UserservicesImpL();
+//        Userservices userlogin=new UserservicesImpL();
+//
+//        User user=userlogin.LoginUser("test","1111");
+//        if(user!=null){
+//        System.out.println(user.getUserPassword());}
 
-        User user=userlogin.LoginUser("test","1111");
-        if(user!=null){
-        System.out.println(user.getUserPassword());}
+        System.out.println(getUserCount(null,1));
     }
 }
