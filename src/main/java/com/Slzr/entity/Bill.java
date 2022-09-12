@@ -1,8 +1,9 @@
 package com.Slzr.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Bill {
+public class Bill implements Serializable {
     private Integer id;
     private String billCode;
     private String productName;

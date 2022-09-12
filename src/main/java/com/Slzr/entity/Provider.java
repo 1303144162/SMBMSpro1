@@ -1,8 +1,9 @@
 package com.Slzr.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Provider {
+public class Provider implements Serializable {
     private Integer id;
     private String proCode;
     private String proName;
